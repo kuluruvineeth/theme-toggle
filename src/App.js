@@ -1,23 +1,24 @@
-import logo from './logo.svg';
-import './App.css';
+import { useState } from "react";
+import styled, { createGlobalStyle } from "styled-components";
+import ThemeContext from "./ThemeContext";
+import Toggler from "./Toggle";
+
+const GlobalStyles = createGlobalStyle`
+  body{
+    background-color: ${(props) => (props.darkMode ? "#334" : "#eef")};
+    color: ${(props) => (props.darkMode ? "#eee" : "#222")};
+  }
+`;
 
 function App() {
+  const [darkMode, setDarkMode] = useState(false);
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <ThemeContext.Provider value={{ darkMode, setDarkMode }}>
+        <GlobalStyles darkMode={darkMode}></GlobalStyles>
+        <h3>Dark Mode: </h3>
+        <Toggler />
+      </ThemeContext.Provider>
     </div>
   );
 }
